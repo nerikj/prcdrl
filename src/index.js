@@ -102,6 +102,12 @@ function init() {
   window.addEventListener('resize', resize, false);
 
   // relax(2);
+
+  window.addEventListener("mousemove", function(event) {
+    const div = document.querySelector("#cursor");
+    const position = "X: " + event.clientX + " Y: " + event.clientY;
+    div.innerHTML = position;
+  });
 }
 
 init();
