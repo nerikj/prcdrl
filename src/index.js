@@ -70,7 +70,7 @@ function render() {
       [points2[ti * 2], points2[ti * 2 + 1]],
       [points2[tj * 2], points2[tj * 2 + 1]]
     ];
-    canvas.drawPath(path, { strokeStyle: "#ccccff" });
+    canvas.drawPolygon(path, { strokeStyle: "#ccccff" });
   }
 
   // draw hull
@@ -80,22 +80,18 @@ function render() {
   while (node = node.next, node !== hull) {
     path.push([node.x, node.y]);
   }
-  canvas.drawPath(path, { strokeStyle: "#99bb99" });
+  canvas.drawPolygon(path, { strokeStyle: "#99bb99" });
 
   // draw voronoi cells
   for (let cellPolygon of voronoi.cellPolygons()) {
-    let from;
+    const path = [];
     for (let i = 0; i < cellPolygon.length; i++) {
-      const to = cellPolygon[i];
-      if (from) {
-        const path = [
-          [from[0], from[1]],
-          [to[0], to[1]]
-        ];
-        canvas.drawPath(path, { strokeStyle: "#ff5555" });
-      }
-      from = to;
+      path.push([cellPolygon[i][0], cellPolygon[i][1]]);
     }
+    canvas.drawPolygon(path, {
+      fillStyle: "rgba(200, 100, 100, 0.2)",
+      strokeStyle: "rgba(200, 100, 100, 0.6)"
+    });
   }
 }
 

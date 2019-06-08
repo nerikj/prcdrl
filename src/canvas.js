@@ -25,8 +25,9 @@ class Canvas {
     this.ctx.fill();
   }
 
-  drawPath(path, options) {
-    const { strokeStyle = "#000000" } = options;
+  // path will close itself so last point isn't needed
+  drawPolygon(path, options) {
+    const { fillStyle, strokeStyle = "#000000" } = options;
 
     this.ctx.beginPath();
     for (let point of path) {
@@ -35,6 +36,10 @@ class Canvas {
     this.ctx.closePath();
     this.ctx.strokeStyle = strokeStyle;
     this.ctx.stroke();
+    if (fillStyle) {
+      this.ctx.fillStyle = fillStyle;
+      this.ctx.fill();
+    }
   }
 }
 
