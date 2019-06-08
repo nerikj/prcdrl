@@ -33,17 +33,9 @@ window.relax = function(steps = 1) {
       for (var i = 0; i < cellPolygon.length; i++) {
         x += cellPolygon[i][0];
         y += cellPolygon[i][1];
-        // console.log("added x", cellPolygon[i][0], "total", x);
-        // console.log("added y", cellPolygon[i][1], "total", y);
       }
       x = x / (cellPolygon.length);
       y = y / (cellPolygon.length);
-      // console.log("R", x, y);
-      // ctx.beginPath();
-      // ctx.arc(x, y, 3, 0, 2 * Math.PI);
-      // ctx.fillStyle = 'red';
-      // ctx.fill();
-      // break;
       p2.push([x, y]);
     }
     assignPoints(p2);
