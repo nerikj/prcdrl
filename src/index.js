@@ -97,24 +97,6 @@ function render() {
       from = to;
     }
   }
-
-  // NOK GRID
-  // for (let k = 0; k < 10; k++) {
-  //   const size = 30;
-  //   const nw = k*size;
-  //   ctx.beginPath();
-  //   ctx.strokeStyle = '#555555';
-  //   ctx.moveTo(nw, 0);
-  //   ctx.lineTo(nw+size, 0);
-  //   ctx.lineTo(nw+size, size);
-  //   ctx.lineTo(nw, size);
-  //   ctx.lineTo(nw, size);
-  //   ctx.closePath();
-  //   ctx.stroke();
-
-  //   const nearest_point = delaunay.find(nw+(size/2), size/2);
-  //   console.log("GOT2", nearest_point, points[nearest_point]);
-  // }
 }
 
 function resize() {
