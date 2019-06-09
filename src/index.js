@@ -1,8 +1,11 @@
 import { Delaunay } from "d3-delaunay";
 import Canvas from "./canvas";
+import Cell from "./cell";
+import Map from "./map";
 import get_polygon_centroid from "./polygon";
 
 let canvas;
+let map;
 
 let points = [];
 let delaunay;
@@ -44,7 +47,7 @@ window.relax = function(steps = 1) {
 };
 
 function render() {
-  canvas.clear();
+  map.render();
 
   // draw points
   for (let point of points) {
@@ -59,32 +62,20 @@ function render() {
     const ti = triangles[i];
     const tj = triangles[j];
     const path = [
-      [points2[ti * 2], points2[ti * 2 + 1]],
-      [points2[tj * 2], points2[tj * 2 + 1]]
+      { x: points2[ti * 2], y: points2[ti * 2 + 1] },
+      { x: points2[tj * 2], y: points2[tj * 2 + 1] }
     ];
-    canvas.drawPolygon(path, { strokeStyle: "#ccccff" });
+    canvas.drawPolygon(path, { strokeStyle: "rgba(0, 0, 0, 0.2)" });
   }
 
   // draw hull
   const {hull} = delaunay;
   let node = hull;
-  const path = [[node.x, node.y]];
+  const path = [{ x: node.x, y: node.y }];
   while (node = node.next, node !== hull) {
-    path.push([node.x, node.y]);
+    path.push({ x: node.x, y: node.y });
   }
-  canvas.drawPolygon(path, { strokeStyle: "#99bb99" });
-
-  // draw voronoi cells
-  for (let cellPolygon of voronoi.cellPolygons()) {
-    const path = [];
-    for (let i = 0; i < cellPolygon.length; i++) {
-      path.push([cellPolygon[i][0], cellPolygon[i][1]]);
-    }
-    canvas.drawPolygon(path, {
-      fillStyle: "rgba(200, 100, 100, 0.2)",
-      strokeStyle: "rgba(200, 100, 100, 0.6)"
-    });
-  }
+  canvas.drawPolygon(path, { strokeStyle: "rgba(0, 0, 0, 0.2)" });
 }
 
 function resize() {
@@ -93,11 +84,25 @@ function resize() {
 }
 
 function init() {
-  const cnvs = document.getElementById('map');
+  const el = document.getElementById('map');
 
-  canvas = new Canvas(cnvs, window.innerWidth, window.innerHeight);
+  canvas = new Canvas(el, window.innerWidth, window.innerHeight);
   points = generatePoints(500);
   assignPoints(points);
+
+  map = new Map(canvas);
+  const cells = [];
+  for (const cellPolygon of voronoi.cellPolygons()) {
+    const path = [];
+
+    for (let i = 0; i < cellPolygon.length; i++) {
+      path.push({ x: cellPolygon[i][0], y: cellPolygon[i][1] });
+    }
+
+    cells.push(new Cell(path));
+  }
+  map.cells = cells;
+
   resize();
   window.addEventListener('resize', resize, false);
 
