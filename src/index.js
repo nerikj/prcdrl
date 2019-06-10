@@ -23,15 +23,14 @@ function init() {
   canvas = new Canvas(el, window.innerWidth, window.innerHeight);
 
   voronoi = Voronoi.generate(50, canvas.width, canvas.height);
+  voronoi.relax(3);
 
   map = new Map(canvas);
   map.cells = voronoi.cells();
 
-  resize();
+  render();
+
   window.addEventListener('resize', resize, false);
-
-  // voronoi.relax(2);
-
   // addCursorDisplay();
 }
 

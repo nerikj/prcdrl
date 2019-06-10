@@ -12,10 +12,20 @@ class Voronoi {
     }
 
     const v = new Voronoi();
+    v.width = width;
+    v.height = height;
     v.points = points;
-    v.delaunay = Delaunay.from(points);
-    v.voronoi = v.delaunay.voronoi([0, 0, width, height]);
     return v;
+  }
+
+  get points() {
+    return this._points;
+  }
+
+  set points(points) {
+    this._points = points;
+    this.delaunay = Delaunay.from(points);
+    this.voronoi = this.delaunay.voronoi([0, 0, this.width, this.height]);
   }
 
   cells() {
@@ -35,12 +45,7 @@ class Voronoi {
   }
 
   delaunayPolygons() {
-    const {
-      points: points2,
-      halfedges: halfedges,
-      hull: hull,
-      triangles: triangles
-    } = this.delaunay;
+    const { points, halfedges, hull, triangles} = this.delaunay;
     const polygons = [];
 
     for (let i = 0, n = halfedges.length; i < n; ++i) {
@@ -49,8 +54,8 @@ class Voronoi {
       const ti = triangles[i];
       const tj = triangles[j];
       const polygon = [
-        { x: points2[ti * 2], y: points2[ti * 2 + 1] },
-        { x: points2[tj * 2], y: points2[tj * 2 + 1] }
+        { x: points[ti * 2], y: points[ti * 2 + 1] },
+        { x: points[tj * 2], y: points[tj * 2 + 1] }
       ];
       polygons.push(polygon);
     }
