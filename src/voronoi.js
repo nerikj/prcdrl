@@ -34,6 +34,38 @@ class Voronoi {
     return cells;
   }
 
+  delaunayPolygons() {
+    const {
+      points: points2,
+      halfedges: halfedges,
+      hull: hull,
+      triangles: triangles
+    } = this.delaunay;
+    const polygons = [];
+
+    for (let i = 0, n = halfedges.length; i < n; ++i) {
+      const j = halfedges[i];
+      if (j < i) continue;
+      const ti = triangles[i];
+      const tj = triangles[j];
+      const polygon = [
+        { x: points2[ti * 2], y: points2[ti * 2 + 1] },
+        { x: points2[tj * 2], y: points2[tj * 2 + 1] }
+      ];
+      polygons.push(polygon);
+    }
+    return polygons;
+  }
+
+  hullPolygon() {
+    let node = this.delaunay.hull;
+    const polygon = [{ x: node.x, y: node.y }];
+    while (node = node.next, node !== this.delaunay.hull) {
+      polygon.push({ x: node.x, y: node.y });
+    }
+    return polygon;
+  }
+
   relax(steps = 1) {
     for(let j = 0; j < steps; j++) {
       const points = [];

@@ -36,38 +36,15 @@ function init() {
 }
 
 function drawDelaunay() {
-  const {
-    points: points2,
-    halfedges: halfedges,
-    hull: hull,
-    triangles: triangles
-  } = voronoi.delaunay;
-
-  // draw points
   for (let point of voronoi.points) {
     canvas.drawCircle(point[0], point[1], 3, { fillStyle: "black" });
   }
 
-  // draw delaunay triangles
-  for (let i = 0, n = halfedges.length; i < n; ++i) {
-    const j = halfedges[i];
-    if (j < i) continue;
-    const ti = triangles[i];
-    const tj = triangles[j];
-    const path = [
-      { x: points2[ti * 2], y: points2[ti * 2 + 1] },
-      { x: points2[tj * 2], y: points2[tj * 2 + 1] }
-    ];
-    canvas.drawPolygon(path, { strokeStyle: "rgba(0, 0, 0, 0.2)" });
+  for (let polygon of voronoi.delaunayPolygons()) {
+    canvas.drawPolygon(polygon, { strokeStyle: "rgba(0, 0, 0, 0.2)" });
   }
 
-  // draw hull
-  let node = hull;
-  const path = [{ x: node.x, y: node.y }];
-  while (node = node.next, node !== hull) {
-    path.push({ x: node.x, y: node.y });
-  }
-  canvas.drawPolygon(path, { strokeStyle: "rgba(0, 0, 0, 0.2)" });
+  canvas.drawPolygon(voronoi.hullPolygon(), { strokeStyle: "rgba(0, 0, 0, 0.2)" });
 }
 
 function addCursorDisplay() {
