@@ -2,7 +2,6 @@ import Canvas from "./canvas";
 import Cell from "./cell";
 import Voronoi from "./voronoi";
 import Map from "./map";
-import get_polygon_centroid from "./polygon";
 
 let canvas;
 let map;
