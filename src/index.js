@@ -16,26 +16,22 @@ function addCursorDisplay() {
 }
 
 function drawDelaunay() {
-  for (let point of voronoi.points) {
+  for (let point of map.voronoi.points) {
     canvas.drawCircle(point[0], point[1], 3, { fillStyle: "black" });
   }
 
-  for (let polygon of voronoi.delaunayPolygons()) {
+  for (let polygon of map.voronoi.delaunayPolygons()) {
     canvas.drawPolygon(polygon, { strokeStyle: "rgba(0, 0, 0, 0.2)" });
   }
 
-  canvas.drawPolygon(voronoi.hullPolygon(), { strokeStyle: "rgba(0, 0, 0, 0.2)" });
+  canvas.drawPolygon(map.voronoi.hullPolygon(), { strokeStyle: "rgba(0, 0, 0, 0.2)" });
 }
 
 function init() {
   const el = document.getElementById('map');
   canvas = new Canvas(el, window.innerWidth, window.innerHeight);
 
-  voronoi = Voronoi.generate(50, canvas.width, canvas.height);
-  voronoi.relax(3);
-
-  map = new Map(canvas);
-  map.cells = voronoi.cells();
+  map = Map.generate(200, canvas.width, canvas.height);
 
   render();
 
@@ -44,7 +40,7 @@ function init() {
 }
 
 function render() {
-  map.render();
+  map.render(canvas);
   drawDelaunay();
 }
 

@@ -1,18 +1,27 @@
+import Voronoi from './voronoi';
+
 class Map {
-  constructor(canvas) {
-    this.canvas = canvas;
+  constructor() {
     this.cells = [];
   }
 
-  render() {
-    this.canvas.clear();
+  static generate(numberOfCells, width, height) {
+    const map = new Map();
+    map.voronoi = Voronoi.generate(numberOfCells, width, height);
+    map.voronoi.relax(3);
+    map.cells = map.voronoi.cells();
+    return map;
+  }
 
-    for (const cell of this.cells) {
-      this.canvas.drawPolygon(cell.path, {
+  render(canvas) {
+    canvas.clear();
+
+    this.cells.forEach((cell) => {
+      canvas.drawPolygon(cell.path, {
         fillStyle: cell.fillStyle,
-        strokeStyle: "rgba(255, 0, 0, 0.5)"
+        strokeStyle: 'rgba(255, 0, 0, 0.5)',
       });
-    }
+    });
   }
 }
 
