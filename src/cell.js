@@ -1,5 +1,6 @@
 class Cell {
-  constructor(path) {
+  constructor(centroid, path) {
+    this.centroid = centroid;
     this.path = path;
 
     // TODO: change from random style to something else

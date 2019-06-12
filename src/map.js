@@ -38,7 +38,8 @@ class Map {
     // }
 
     this.cells.forEach((cell) => {
-      const { x, y } = cell.path[0];
+      const x = cell.centroid[0];
+      const y = cell.centroid[1];
       const value = this.noise.noise2D(x, y);
       let fillStyle;
       if (value >= 0.1) {

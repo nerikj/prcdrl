@@ -31,15 +31,18 @@ class Voronoi {
   cells() {
     const cells = [];
 
-    for (const cellPolygon of this.voronoi.cellPolygons()) {
+    this.points.forEach((point) => {
+      const index = this.delaunay.find(point[0], point[1]);
+      const cellPolygon = this.voronoi.cellPolygon(index);
+
       const path = [];
 
-      for (let i = 0; i < cellPolygon.length; i++) {
+      for (let i = 0; i < cellPolygon.length; i += 1) {
         path.push({ x: cellPolygon[i][0], y: cellPolygon[i][1] });
       }
 
-      cells.push(new Cell(path));
-    }
+      cells.push(new Cell(point, path));
+    });
 
     return cells;
   }
