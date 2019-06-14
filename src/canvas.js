@@ -25,6 +25,12 @@ class Canvas {
     this.ctx.fill();
   }
 
+  drawPixel(x, y, options) {
+    const { fillStyle = '#000000' } = options;
+    this.ctx.fillStyle = fillStyle;
+    this.ctx.fillRect(x, y, 1, 1);
+  }
+
   drawPolygon(path, options) {
     const { fillStyle, strokeStyle = "#000000" } = options;
 
