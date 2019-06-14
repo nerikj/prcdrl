@@ -46,6 +46,13 @@ class Canvas {
       this.ctx.fill();
     }
   }
+
+  drawText(text, x, y) {
+    this.ctx.fillStyle = '#000';
+    this.ctx.font = '12px sans';
+    this.ctx.textAlign = 'center';
+    this.ctx.fillText(text, x, y);
+  }
 }
 
 export default Canvas;

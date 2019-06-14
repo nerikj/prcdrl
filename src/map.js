@@ -108,6 +108,7 @@ class Map {
         fillStyle,
         strokeStyle: 'rgb(100, 100, 100)',
       });
+      canvas.drawText(cell.terrain[0], cell.centroid[0], cell.centroid[1]);
     });
 
     // this.renderIslandMask(canvas);
