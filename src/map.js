@@ -59,7 +59,7 @@ class Map {
       const y = cell.centroid[1];
       const intX = Math.floor(x);
       const intY = Math.floor(y);
-      const noiseValue = noise.noise2D(x / (this.width * 0.35), y / (this.height * 0.25)) + 1;
+      const noiseValue = noise.noise2D(x / (this.width * 0.22), y / (this.height * 0.22)) + 1;
       const maskValue = this.islandShape[intX][intY];
 
       const terrain = noiseValue * maskValue;
