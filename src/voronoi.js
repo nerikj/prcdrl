@@ -2,10 +2,10 @@ import Cell from "./cell";
 import { Delaunay } from "d3-delaunay";
 
 class Voronoi {
-  static generate(number_of_points, width, height) {
+  static generate(numberOfPoints, width, height) {
     const points = [];
 
-    for(let i = 0; i < number_of_points; i++) {
+    for(let i = 0; i < numberOfPoints; i++) {
       const x = Math.floor(Math.random() * width) + 1;
       const y = Math.floor(Math.random() * height) + 1;
       points.push([x, y]);
