@@ -41,7 +41,7 @@ class Voronoi {
         path.push({ x: cellPolygon[i][0], y: cellPolygon[i][1] });
       }
 
-      cells.push(new Cell(point, path));
+      cells[index] = new Cell(point, path);
     });
 
     return cells;

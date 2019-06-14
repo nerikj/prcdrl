@@ -73,6 +73,18 @@ class Map {
         cell.terrain = 'water';
       }
     });
+
+    // first pass, generate ocean
+    // TODO: can this be done in a better way?
+    this.cells.forEach((cell) => {
+      let border = false;
+      // console.log(cell);
+      cell.path.forEach((path) => {
+        if (path.x == 0 || Math.ceil(path.x) >= this.width || path.y == 0 || Math.ceil(path.y) >= this.height) {
+          cell.terrain = 'ocean';
+        }
+      });
+    });
   }
 
   renderIslandMask(canvas) {
@@ -99,6 +111,9 @@ class Map {
         case 'land':
           fillStyle = 'rgb(80, 180, 80)';
           break;
+        case 'ocean':
+          fillStyle = 'rgb(0, 0, 190)';
+          break;
         default:
           fillStyle = 'rgb(255, 255, 255)';
           break;
@@ -108,7 +123,7 @@ class Map {
         fillStyle,
         strokeStyle: 'rgb(100, 100, 100)',
       });
-      canvas.drawText(cell.terrain[0], cell.centroid[0], cell.centroid[1]);
+      // canvas.drawText(cell.terrain[0], cell.centroid[0], cell.centroid[1]);
     });
 
     // this.renderIslandMask(canvas);
