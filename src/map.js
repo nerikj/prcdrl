@@ -2,14 +2,14 @@ import SimplexNoise from 'simplex-noise';
 import Voronoi from './voronoi';
 
 class Map {
-  constructor() {
+  constructor(width, height) {
     this.cells = [];
+    this.width = width;
+    this.height = height;
   }
 
   static generate(numberOfCells, width, height) {
-    const map = new Map();
-    map.width = width;
-    map.height = height;
+    const map = new Map(width, height);
 
     map.voronoi = Voronoi.generate(numberOfCells, width, height);
     map.voronoi.relax(3);
