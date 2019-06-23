@@ -2,6 +2,7 @@ import Canvas from './canvas';
 import Map from './map';
 
 let canvas;
+let debug = false;
 let map;
 
 function addCursorDisplay() {
@@ -24,9 +25,16 @@ function drawDelaunay() {
   canvas.drawPolygon(map.voronoi.hullPolygon(), { strokeStyle: 'rgba(0, 0, 0, 0.2)' });
 }
 
+function parseParams() {
+  const params = new URLSearchParams(window.location.search);
+  debug = params.get('debug') === 'true';
+}
+
 function render() {
   map.render(canvas);
-  drawDelaunay();
+  if (debug) {
+    drawDelaunay();
+  }
 }
 
 function resize() {
@@ -35,6 +43,8 @@ function resize() {
 }
 
 function init() {
+  parseParams();
+
   const el = document.getElementById('map');
   canvas = new Canvas(el, window.innerWidth, window.innerHeight);
 
@@ -43,7 +53,10 @@ function init() {
   render();
 
   window.addEventListener('resize', resize, false);
-  addCursorDisplay();
+
+  if (debug) {
+    addCursorDisplay();
+  }
 }
 
 init();
