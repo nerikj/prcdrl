@@ -37,11 +37,6 @@ function render() {
   }
 }
 
-function resize() {
-  canvas.resize(window.innerWidth, window.innerHeight);
-  render();
-}
-
 function init() {
   parseParams();
 
@@ -51,8 +46,6 @@ function init() {
   map = Map.generate(200, canvas.width, canvas.height);
 
   render();
-
-  window.addEventListener('resize', resize, false);
 
   if (debug) {
     addCursorDisplay();
