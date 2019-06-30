@@ -87,6 +87,18 @@ class Map {
     });
   }
 
+  renderDelaunay(canvas) {
+    this.voronoi.points.forEach((point) => {
+      canvas.drawCircle(point[0], point[1], 3, { fillStyle: 'black' });
+    });
+
+    this.voronoi.delaunayPolygons().forEach((polygon) => {
+      canvas.drawPolygon(polygon, { strokeStyle: 'rgba(0, 0, 0, 0.2)' });
+    });
+
+    canvas.drawPolygon(this.voronoi.hullPolygon(), { strokeStyle: 'rgba(0, 0, 0, 0.2)' });
+  }
+
   renderIslandMask(canvas) {
     for (let x = 0; x < this.width; x += 1) {
       for (let y = 0; y < this.height; y += 1) {

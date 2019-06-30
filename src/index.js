@@ -13,18 +13,6 @@ function addCursorDisplay() {
   });
 }
 
-function drawDelaunay() {
-  map.voronoi.points.forEach((point) => {
-    canvas.drawCircle(point[0], point[1], 3, { fillStyle: 'black' });
-  });
-
-  map.voronoi.delaunayPolygons().forEach((polygon) => {
-    canvas.drawPolygon(polygon, { strokeStyle: 'rgba(0, 0, 0, 0.2)' });
-  });
-
-  canvas.drawPolygon(map.voronoi.hullPolygon(), { strokeStyle: 'rgba(0, 0, 0, 0.2)' });
-}
-
 function parseParams() {
   const params = new URLSearchParams(window.location.search);
   debug = params.get('debug') === 'true';
@@ -33,7 +21,7 @@ function parseParams() {
 function render() {
   map.render(canvas);
   if (debug) {
-    drawDelaunay();
+    map.renderDelaunay(canvas);
   }
 }
 
