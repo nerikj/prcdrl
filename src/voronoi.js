@@ -1,11 +1,11 @@
-import Cell from "./cell";
-import { Delaunay } from "d3-delaunay";
+import { Delaunay } from 'd3-delaunay';
+import Cell from './cell';
 
 class Voronoi {
   static generate(numberOfPoints, width, height) {
     const points = [];
 
-    for(let i = 0; i < numberOfPoints; i++) {
+    for (let i = 0; i < numberOfPoints; i += 1) {
       const x = Math.floor(Math.random() * width) + 1;
       const y = Math.floor(Math.random() * height) + 1;
       points.push([x, y]);
@@ -48,7 +48,7 @@ class Voronoi {
   }
 
   delaunayPolygons() {
-    const { points, halfedges, hull, triangles} = this.delaunay;
+    const { points, halfedges, triangles } = this.delaunay;
     const polygons = [];
 
     for (let i = 0, n = halfedges.length; i < n; ++i) {
@@ -58,7 +58,7 @@ class Voronoi {
       const tj = triangles[j];
       const polygon = [
         { x: points[ti * 2], y: points[ti * 2 + 1] },
-        { x: points[tj * 2], y: points[tj * 2 + 1] }
+        { x: points[tj * 2], y: points[tj * 2 + 1] },
       ];
       polygons.push(polygon);
     }
@@ -75,7 +75,7 @@ class Voronoi {
   }
 
   relax(steps = 1) {
-    for(let j = 0; j < steps; j++) {
+    for (let j = 0; j < steps; j++) {
       const points = [];
 
       for (let cellPolygon of this.voronoi.cellPolygons()) {
