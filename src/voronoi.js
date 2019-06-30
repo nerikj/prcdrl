@@ -66,11 +66,13 @@ class Voronoi {
   }
 
   hullPolygon() {
-    let node = this.delaunay.hull;
-    const polygon = [{ x: node.x, y: node.y }];
-    while (node = node.next, node !== this.delaunay.hull) {
-      polygon.push({ x: node.x, y: node.y });
+    const polygon = [];
+    const points = this.delaunay.hull;
+
+    for (let i = 0; i < points.length; i += 2) {
+      polygon.push({ x: points[0], y: points[[1]] });
     }
+
     return polygon;
   }
 
