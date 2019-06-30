@@ -11,21 +11,14 @@ class Voronoi {
       points.push([x, y]);
     }
 
-    const v = new Voronoi();
-    v.width = width;
-    v.height = height;
-    v.points = points;
-    return v;
+    return new Voronoi(points, width, height);
   }
 
-  get points() {
-    return this._points;
-  }
-
-  set points(points) {
-    this._points = points;
-    this.delaunay = Delaunay.from(points);
-    this.voronoi = this.delaunay.voronoi([0, 0, this.width, this.height]);
+  constructor(points, width, height) {
+    this.points = points;
+    this.width = width;
+    this.height = height;
+    this.createVoronoi(points, width, height);
   }
 
   cells() {
@@ -45,6 +38,11 @@ class Voronoi {
     });
 
     return cells;
+  }
+
+  createVoronoi(points) {
+    this.delaunay = Delaunay.from(points);
+    this.voronoi = this.delaunay.voronoi([0, 0, this.width, this.height]);
   }
 
   delaunayPolygons() {
@@ -93,6 +91,7 @@ class Voronoi {
       }
 
       this.points = points;
+      this.createVoronoi(points);
     }
   }
 }
