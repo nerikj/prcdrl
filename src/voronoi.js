@@ -1,5 +1,4 @@
 import { Delaunay } from 'd3-delaunay';
-import Cell from './cell';
 
 class Voronoi {
   static generate(numberOfPoints, width, height) {
@@ -27,14 +26,13 @@ class Voronoi {
     this.points.forEach((point) => {
       const index = this.delaunay.find(point[0], point[1]);
       const cellPolygon = this.voronoi.cellPolygon(index);
-
       const path = [];
 
       for (let i = 0; i < cellPolygon.length; i += 1) {
         path.push({ x: cellPolygon[i][0], y: cellPolygon[i][1] });
       }
 
-      cells[index] = new Cell(point, path);
+      cells[index] = { centroid: point, path };
     });
 
     return cells;

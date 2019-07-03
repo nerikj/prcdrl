@@ -3,7 +3,7 @@ import Map from './map';
 
 let canvas;
 let debug = false;
-let map;
+const map = new Map([]);
 
 function addCursorDisplay() {
   window.addEventListener('mousemove', (event) => {
@@ -20,9 +20,11 @@ function parseParams() {
 
 function render() {
   map.render(canvas);
-  if (debug) {
-    map.renderDelaunay(canvas);
-  }
+  // TODO: Need to find a way to represent this as paths that can be
+  // sent from the worker
+  // if (debug) {
+  //   map.renderDelaunay(canvas);
+  // }
 }
 
 function init() {
@@ -31,9 +33,32 @@ function init() {
   const el = document.getElementById('map');
   canvas = new Canvas(el, window.innerWidth, window.innerHeight);
 
-  map = Map.generate(200, canvas.width, canvas.height);
+  const mapWorker = new Worker('map_worker.js');
+  mapWorker.postMessage({
+    numberOfCells: 200,
+    width: canvas.width,
+    height: canvas.height,
+  });
 
-  render();
+  mapWorker.onmessage = (e) => {
+    switch (e.data.status) {
+      case 'STEP_START':
+        console.log(e.data.message);
+        break;
+      case 'STEP_DONE':
+        console.log(e.data.message);
+        // map.cells = e.data.cells;
+        // render();
+        break;
+      case 'DONE':
+        map.cells = e.data.cells;
+        render();
+        break;
+      default:
+        console.log(e.data.message);
+        break;
+    }
+  };
 
   if (debug) {
     addCursorDisplay();
