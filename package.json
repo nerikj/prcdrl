@@ -1,7 +1,7 @@
 {
   "name": "prcdrl",
   "version": "1.0.0",
-  "description": "",
+  "description": "A basic map generator using Voronoi polygons",
   "private": true,
   "main": "index.js",
   "scripts": {
