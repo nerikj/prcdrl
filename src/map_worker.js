@@ -47,7 +47,7 @@ function generateTerrain(cells, width, height, islandMask, voronoi) {
 
     const terrain = noiseValue * maskValue;
 
-    if (terrain > 0.15) {
+    if (terrain > 0.20) {
       cell.terrain = 'land';
     } else {
       cell.terrain = 'water';
