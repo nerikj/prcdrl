@@ -43,19 +43,23 @@ function init() {
   mapWorker.onmessage = (e) => {
     switch (e.data.status) {
       case 'STEP_START':
-        console.log(e.data.message);
+        if (debug) {
+          console.log(e.data.message);
+        }
         break;
       case 'STEP_DONE':
-        console.log(e.data.message);
-        // map.cells = e.data.cells;
-        // render();
+        if (debug) {
+          console.log(e.data.message);
+        }
         break;
       case 'DONE':
         map.cells = e.data.cells;
         render();
         break;
       default:
-        console.log(e.data.message);
+        if (debug) {
+          console.log(e.data.message);
+        }
         break;
     }
   };
