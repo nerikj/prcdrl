@@ -26,7 +26,7 @@ class Map {
     }
   }
 
-  render(canvas) {
+  render(canvas, debug = false) {
     canvas.clear();
 
     this.cells.forEach((cell) => {
@@ -51,7 +51,10 @@ class Map {
         fillStyle,
         strokeStyle: 'rgb(100, 100, 100)',
       });
-      // canvas.drawText(cell.terrain[0], cell.centroid[0], cell.centroid[1], { fillStyle: '#fff' });
+
+      if (debug) {
+        canvas.drawText(cell.terrain[0], cell.centroid[0], cell.centroid[1], { fillStyle: '#fff' });
+      }
     });
 
     // this.renderIslandMask(canvas);

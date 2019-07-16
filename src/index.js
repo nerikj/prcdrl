@@ -19,7 +19,7 @@ function parseParams() {
 }
 
 function render() {
-  map.render(canvas);
+  map.render(canvas, debug);
   // TODO: Need to find a way to represent this as paths that can be
   // sent from the worker
   // if (debug) {
