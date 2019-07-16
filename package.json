@@ -6,8 +6,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "start": "webpack-dev-server",
-    "test": "jest"
+    "start": "webpack-dev-server"
   },
   "author": "Erik Nordlund <me@nilserikjohan.se>",
   "license": "MIT",
@@ -17,11 +16,9 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.4.5",
-    "babel-jest": "^24.8.0",
     "eslint": "^5.3.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
-    "jest": "^24.8.0",
     "webpack": "^4.35.0",
     "webpack-cli": "^3.3.5",
     "webpack-dev-server": "^3.7.2"
