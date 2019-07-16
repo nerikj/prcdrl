@@ -47,8 +47,9 @@ class Canvas {
     }
   }
 
-  drawText(text, x, y) {
-    this.ctx.fillStyle = '#000';
+  drawText(text, x, y, options) {
+    const { fillStyle = '#000000' } = options;
+    this.ctx.fillStyle = fillStyle;
     this.ctx.font = '12px sans';
     this.ctx.textAlign = 'center';
     this.ctx.fillText(text, x, y);

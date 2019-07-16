@@ -34,8 +34,7 @@ function generateIslandMask(width, height) {
   return mask;
 }
 
-function generateTerrain(cells, width, height, islandMask) {
-  // const noise = new SimplexNoise('seed');
+function generateTerrain(cells, width, height, islandMask, voronoi) {
   const noise = new SimplexNoise();
 
   cells.forEach((cell) => {
@@ -47,9 +46,6 @@ function generateTerrain(cells, width, height, islandMask) {
     const maskValue = islandMask[intX][intY];
 
     const terrain = noiseValue * maskValue;
-    // if (intX > this.width * 0.25 && this.width * 0.75 && intY > this.height * 0.25 && intY < this.height * 0.75) {
-    //   console.log(intX, intY, noiseValue, maskValue, terrain);
-    // }
 
     if (terrain > 0.15) {
       cell.terrain = 'land';
@@ -58,17 +54,35 @@ function generateTerrain(cells, width, height, islandMask) {
     }
   });
 
-  // first pass, generate ocean
-  // TODO: can this be done in a better way?
+  // first pass, find edges
+  const oceanCells = [];
+
   cells.forEach((cell) => {
-    let border = false;
-    // console.log(cell);
-    cell.path.forEach((path) => {
-      if (path.x == 0 || Math.ceil(path.x) >= width || path.y == 0 || Math.ceil(path.y) >= height) {
+    let edge = false;
+
+    for (let i = 0; i < cell.path.length && !edge; i += 1) {
+      const path = cell.path[i];
+      // TODO: Can edges be detected in a better way?
+      if (path.x === 0 || Math.floor(path.x) >= width || path.y === 0 || Math.floor(path.y) >= height) {
         cell.terrain = 'ocean';
+        oceanCells.push(cell);
+        edge = true;
+      }
+    }
+  });
+
+  // second pass, generate ocean
+  for (let i = 0; i < oceanCells.length; i += 1) {
+    const cell = oceanCells[i];
+
+    voronoi.neighborIndexes(cell).forEach((neighborIndex) => {
+      const neighbor = cells[neighborIndex];
+      if (neighbor.terrain === 'water') {
+        neighbor.terrain = 'ocean';
+        oceanCells.push(neighbor);
       }
     });
-  });
+  }
 }
 
 function generate(numberOfCells, width, height) {
@@ -83,7 +97,7 @@ function generate(numberOfCells, width, height) {
   const islandMask = generateIslandMask(width, height);
 
   stepStart('Generating terrain');
-  generateTerrain(cells, width, height, islandMask);
+  generateTerrain(cells, width, height, islandMask, voronoi);
 
   postMessage({ status: 'DONE', cells });
 }

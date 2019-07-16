@@ -32,7 +32,7 @@ class Voronoi {
         path.push({ x: cellPolygon[i][0], y: cellPolygon[i][1] });
       }
 
-      cells[index] = { centroid: point, path };
+      cells[index] = { centroid: point, index, path };
     });
 
     return cells;
@@ -70,6 +70,10 @@ class Voronoi {
     }
 
     return polygon;
+  }
+
+  neighborIndexes(cell) {
+    return Array.from(this.delaunay.neighbors(cell.index));
   }
 
   relax(steps = 1) {
