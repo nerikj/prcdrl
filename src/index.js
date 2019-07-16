@@ -35,7 +35,7 @@ function init() {
 
   const mapWorker = new Worker('map_worker.js');
   mapWorker.postMessage({
-    numberOfCells: 200,
+    numberOfCells: 5000,
     width: canvas.width,
     height: canvas.height,
   });
