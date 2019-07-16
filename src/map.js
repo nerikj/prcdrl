@@ -34,7 +34,7 @@ class Map {
 
       switch (cell.terrain) {
         case 'water':
-          fillStyle = 'rgb(30, 30, 210)';
+          fillStyle = 'rgb(70, 90, 250)';
           break;
         case 'land':
           fillStyle = 'rgb(80, 180, 80)';
@@ -51,20 +51,10 @@ class Map {
         fillStyle,
         strokeStyle: 'rgb(100, 100, 100)',
       });
-      // canvas.drawText(cell.terrain[0], cell.centroid[0], cell.centroid[1]);
+      // canvas.drawText(cell.terrain[0], cell.centroid[0], cell.centroid[1], { fillStyle: '#fff' });
     });
 
     // this.renderIslandMask(canvas);
-
-    // for (let i = 0; i < 100; i += 1) {
-    //   for (let j = 0; j < 100; j += 1) {
-    //     const value = this.noise.noise2D(i/10, j/10);
-    //     const color = Math.floor((value + 1) * 128);
-    //     const fillStyle = `rgb(${color}, ${color}, ${color})`;
-    //     // console.log('FILLSTYLE', fillStyle);
-    //     canvas.drawPixel(i, j, { fillStyle });
-    //   }
-    // }
   }
 }
 

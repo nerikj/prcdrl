@@ -47,7 +47,7 @@ class Canvas {
     }
   }
 
-  drawText(text, x, y, options) {
+  drawText(text, x, y, options = {}) {
     const { fillStyle = '#000000' } = options;
     this.ctx.fillStyle = fillStyle;
     this.ctx.font = '12px sans';
